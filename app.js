@@ -113,16 +113,20 @@ searcH.addEventListener("input", function(){
 /*
 further features
 
+additonal features added by me on 20 april,2022 -
 1.Add Custom title to noteCard **
 --> done with added functionality to search for note titles
 
 2. Mark a note as important **
 --> done , click on star Icon to mark a note as important , 
-3. separate notes by user
-4. sync with server and host
-5. Add edit note option**
+
+3. Add edit note option**
 --> done - edit note button added and is fully functional
 
+
+Features yet to add ->
+4. separate notes by user
+5. sync with server and host
 */
 
 // edit Note fucntionality
