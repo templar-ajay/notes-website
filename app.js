@@ -100,3 +100,4 @@ further features
 3. separate notes by user
 4. sync with server and host
 5. Add edit note option
+*/
