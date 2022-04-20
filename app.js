@@ -95,6 +95,7 @@ searcH.addEventListener("input", function(){
 
 /*
 further features
+
 1.Add Custom title to noteCard
 2. Mark a note as important
 3. separate notes by user
