@@ -1,4 +1,14 @@
-console.log("Welcome, this is a notes app")
+"use strict";
+console.log("Welcome to Star Notes - Made by Ajay")
+
+
+
+//declarations
+const saveBtn = document.getElementById("saveBtn")
+let modalIsImportant = false
+const star = document.getElementById("modal-star")
+
+
 let important = false
 let notesObj = [];
 // console.log(notesObj)
@@ -52,7 +62,7 @@ function showNotes(){
                   <h5 id = "title${index}" class="card-title">${(title==""? "Note "+index +1 : title)}</h5>
                   <p id = "text${index}" class="card-text">${text}</p>
                   <button id = "${index}" onclick = "deleteNote(this.id)" class="btn btn-primary">Delete Note</button>
-                  <button id = "${index}" onclick = "editNote(this.id)" class="btn btn-primary">Edit Note</button>
+                  <button id = "${index}" onclick = "editNote(this.id)" class="btn btn-primary type = "button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit Note</button>
                 </div>
                 </div>
                         `
@@ -132,24 +142,34 @@ Features yet to add ->
 // edit Note fucntionality
 
 function editNote([index]){
-
-    let notes = localStorage.getItem("notes")
-    notesObj = JSON.parse(notes)
-    let addText = document.getElementById("addTxt");
-    let addTitle = document.getElementById("addTitle");
-    let star = document.getElementById("important-icon");
-
-    if(notesObj[index][2]){
-        star.src = "icons/starOrange.png";
-        important = true;
-    }else{
-        star.src = "icons/starGrey.png"
-        important = false;
-    }
+    // send the index to modal 
+    saveBtn.setAttribute("index",index)
     
-    addTitle.value = document.getElementById(`title${index}`).innerText
-    addText.value = document.getElementById(`text${index}`).innerText
-    deleteNote(index);
+    // send title and text to modal 
+    let cardTitle = document.getElementById(`title${index}`).innerHTML;
+    let cardText = document.getElementById(`text${index}`).innerHTML;
+    
+    document.getElementById(`editTitle`).value = cardTitle;
+    document.getElementById('editText').value = cardText;
+
+    // send important to modal
+      // get isImportant from local stroage
+    let notes = localStorage.getItem('notes')
+    let notesObj = JSON.parse(notes)
+
+    modalIsImportant = notesObj[index][2]
+    
+    // send value to star
+    
+
+    showModalStar();
+}
+function showModalStar(){
+    if(modalIsImportant){
+        star.setAttribute("src","icons/starOrange.png")
+    }else {
+        star.setAttribute("src","icons/starGrey.png")
+    }
 }
     
 // isImportant 
@@ -167,5 +187,29 @@ function switchImportant(){
 // repo recreated
 
 
+function saveBtnClicked(index){
+    
 
+    // get edit text,title,star value and send to the righteous card
+    let editedTitle  = document.getElementById(`editTitle`).value
+    let editedText = document.getElementById('editText').value
+    
+    
+    if(modalIsImportant){
+        notesObj[index][2] = modalIsImportant
+    }else notesObj[index][2] = false;
+    
+    // put value in local storage
+    notesObj[index]=[editedTitle,editedText,modalIsImportant]
+    localStorage.setItem("notes", JSON.stringify(notesObj))
+    showNotes();
 
+}
+
+function starSwitch(){
+    if(modalIsImportant){
+        modalIsImportant = false;
+    }else modalIsImportant = true;
+
+    showModalStar()
+}
