@@ -61,7 +61,7 @@ function showNotes(){
                 <div class="${index} card-body ">
                   <h5 id = "title${index}" class="card-title">${(title==""? "Note "+index +1 : title)}</h5>
                   <p id = "text${index}" class="card-text">${text}</p>
-                  <button id = "${index}" onclick = "deleteNote(this.id)" class="btn btn-primary">Delete Note</button>
+                  <button id = "${index}" onclick = "deleteNote(this.id)" class="btn btn-primary" >Delete Note</button>
                   <button id = "${index}" onclick = "editNote(this.id)" class="btn btn-primary type = "button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit Note</button>
                 </div>
                 </div>
@@ -81,6 +81,7 @@ function showNotes(){
     
     // function to delete a note
     
+
 function deleteNote(index){
     let notes = localStorage.getItem("notes")
     // console.log("I am deleting",index);
@@ -90,10 +91,38 @@ function deleteNote(index){
     }else{
         notesObj = JSON.parse(notes)
     }
+    // show toast
 
-    notesObj.splice(index,1)
+    const deleteToast = document.getElementById("liveToast")
+    let toast  = new bootstrap.Toast(deleteToast)
+    toast.show()
+    // update toast timer
+    let toastMessage = document.getElementById("toastMessage")
+    for (let i=3 ;i>=0;i--){
+        setTimeout(function(){
+        toastMessage.innerHTML = `Deleting Note in ${3-i} Seconds`            
+        },i*1000)
+    }
+
+    // hide toast after 3 seconds
+    function hideFn(){ toast.hide()}
+    let hide = setTimeout(hideFn,3000)
+
+    // listen for undo button click
+    let undoBtn = document.getElementById("undoBtn")
+    undoBtn.addEventListener("click",function(){
+        clearTimeout(theTimeout)
+        clearTimeout(hide)
+    })
+
+    // perform deletion
+    function deleteM(){
+    notesObj.splice(index,1);
     localStorage.setItem("notes", JSON.stringify(notesObj));
-    showNotes()
+    showNotes()}
+    
+    const theTimeout = setTimeout(deleteM, 3000);
+
 }
 
 // adding search functionality
