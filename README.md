@@ -10,3 +10,4 @@ To Improve -
 1. either make the cancel button on the navbar work or delete it
 2. the note's body content is not properly indented on save. make it readable and the indentation the same as input by the user (problem is with points)
 3. Make the cards resizable. (either collectively which will look uniform or individually.
+4. Add Dark mode.
