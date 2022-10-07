@@ -1,4 +1,5 @@
 # notes-website
+app link - https://templar-command0.github.io/notes-website/
 
 I took this inspiration from CodeWithHarry.com
 then further built it on my own .
